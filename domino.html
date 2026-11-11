@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Marcador de Dominó · ASP JBN</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&display=swap">
+<style>
+:root{
+  --bg:#000; --head:#f7f1e1;
+  --card:#fbf6e6; --ink:#12303f; --muted:#5d6f77; --line:#d8cfae;
+  --teal:#0f6b7a; --gold:#e0a21a; --red:#c4412f; --win:#1f7a4d;
+  box-sizing:border-box; color-scheme:dark;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#000;--head:#f7f1e1}}
+:root[data-theme="dark"]{--bg:#000;--head:#f7f1e1}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;color:var(--head);font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.4;
+  background-color:var(--bg)}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse at center,rgba(0,0,0,0) 30%,rgba(0,0,0,.8) 100%),url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27260%27%20height%3D%27260%27%3E%3Cg%20transform%3D%27translate%2848%2055%29%20rotate%28-28%29%27%3E%3Crect%20x%3D%27-14%27%20y%3D%27-28%27%20width%3D%2728%27%20height%3D%2756%27%20rx%3D%275%27%20fill%3D%27none%27%20stroke%3D%27rgb%28224%2C162%2C26%29%27%20stroke-opacity%3D%27.3%27%20stroke-width%3D%272%27/%3E%3Cline%20x1%3D%27-9%27%20y1%3D%270%27%20x2%3D%279%27%20y2%3D%270%27%20stroke%3D%27rgb%28224%2C162%2C26%29%27%20stroke-opacity%3D%27.3%27%20stroke-width%3D%272%27/%3E%3Cg%20fill%3D%27rgb%28224%2C162%2C26%29%27%20fill-opacity%3D%27.4%27%3E%3Ccircle%20cx%3D%27-6%27%20cy%3D%27-21%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%276%27%20cy%3D%27-21%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%27-6%27%20cy%3D%27-14%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%276%27%20cy%3D%27-14%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%27-6%27%20cy%3D%27-7%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%276%27%20cy%3D%27-7%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%27-6%27%20cy%3D%277%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%276%27%20cy%3D%277%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%27-6%27%20cy%3D%2721%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%276%27%20cy%3D%2721%27%20r%3D%272.4%27/%3E%3C/g%3E%3C/g%3E%3Cg%20transform%3D%27translate%28190%2048%29%20rotate%2832%29%27%3E%3Crect%20x%3D%27-14%27%20y%3D%27-28%27%20width%3D%2728%27%20height%3D%2756%27%20rx%3D%275%27%20fill%3D%27none%27%20stroke%3D%27rgb%28224%2C162%2C26%29%27%20stroke-opacity%3D%27.3%27%20stroke-width%3D%272%27/%3E%3Cline%20x1%3D%27-9%27%20y1%3D%270%27%20x2%3D%279%27%20y2%3D%270%27%20stroke%3D%27rgb%28224%2C162%2C26%29%27%20stroke-opacity%3D%27.3%27%20stroke-width%3D%272%27/%3E%3Cg%20fill%3D%27rgb%28224%2C162%2C26%29%27%20fill-opacity%3D%27.4%27%3E%3Ccircle%20cx%3D%27-6%27%20cy%3D%27-21%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%276%27%20cy%3D%27-7%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%27-6%27%20cy%3D%277%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%276%27%20cy%3D%277%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%270%27%20cy%3D%2714%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%27-6%27%20cy%3D%2721%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%276%27%20cy%3D%2721%27%20r%3D%272.4%27/%3E%3C/g%3E%3C/g%3E%3Cg%20transform%3D%27translate%28120%20135%29%20rotate%2878%29%27%3E%3Crect%20x%3D%27-14%27%20y%3D%27-28%27%20width%3D%2728%27%20height%3D%2756%27%20rx%3D%275%27%20fill%3D%27none%27%20stroke%3D%27rgb%28224%2C162%2C26%29%27%20stroke-opacity%3D%27.3%27%20stroke-width%3D%272%27/%3E%3Cline%20x1%3D%27-9%27%20y1%3D%270%27%20x2%3D%279%27%20y2%3D%270%27%20stroke%3D%27rgb%28224%2C162%2C26%29%27%20stroke-opacity%3D%27.3%27%20stroke-width%3D%272%27/%3E%3Cg%20fill%3D%27rgb%28224%2C162%2C26%29%27%20fill-opacity%3D%27.4%27%3E%3Ccircle%20cx%3D%27-6%27%20cy%3D%27-21%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%270%27%20cy%3D%27-14%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%276%27%20cy%3D%27-7%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%27-6%27%20cy%3D%277%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%270%27%20cy%3D%2714%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%276%27%20cy%3D%2721%27%20r%3D%272.4%27/%3E%3C/g%3E%3C/g%3E%3Cg%20transform%3D%27translate%2848%20208%29%20rotate%2852%29%27%3E%3Crect%20x%3D%27-14%27%20y%3D%27-28%27%20width%3D%2728%27%20height%3D%2756%27%20rx%3D%275%27%20fill%3D%27none%27%20stroke%3D%27rgb%28224%2C162%2C26%29%27%20stroke-opacity%3D%27.3%27%20stroke-width%3D%272%27/%3E%3Cline%20x1%3D%27-9%27%20y1%3D%270%27%20x2%3D%279%27%20y2%3D%270%27%20stroke%3D%27rgb%28224%2C162%2C26%29%27%20stroke-opacity%3D%27.3%27%20stroke-width%3D%272%27/%3E%3Cg%20fill%3D%27rgb%28224%2C162%2C26%29%27%20fill-opacity%3D%27.4%27%3E%3Ccircle%20cx%3D%270%27%20cy%3D%27-14%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%27-6%27%20cy%3D%277%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%276%27%20cy%3D%277%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%27-6%27%20cy%3D%2714%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%276%27%20cy%3D%2714%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%27-6%27%20cy%3D%2721%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%276%27%20cy%3D%2721%27%20r%3D%272.4%27/%3E%3C/g%3E%3C/g%3E%3Cg%20transform%3D%27translate%28208%20200%29%20rotate%28-62%29%27%3E%3Crect%20x%3D%27-14%27%20y%3D%27-28%27%20width%3D%2728%27%20height%3D%2756%27%20rx%3D%275%27%20fill%3D%27none%27%20stroke%3D%27rgb%28224%2C162%2C26%29%27%20stroke-opacity%3D%27.3%27%20stroke-width%3D%272%27/%3E%3Cline%20x1%3D%27-9%27%20y1%3D%270%27%20x2%3D%279%27%20y2%3D%270%27%20stroke%3D%27rgb%28224%2C162%2C26%29%27%20stroke-opacity%3D%27.3%27%20stroke-width%3D%272%27/%3E%3Cg%20fill%3D%27rgb%28224%2C162%2C26%29%27%20fill-opacity%3D%27.4%27%3E%3Ccircle%20cx%3D%27-6%27%20cy%3D%277%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%276%27%20cy%3D%277%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%270%27%20cy%3D%2714%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%27-6%27%20cy%3D%2721%27%20r%3D%272.4%27/%3E%3Ccircle%20cx%3D%276%27%20cy%3D%2721%27%20r%3D%272.4%27/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");background-size:auto,260px 260px}
+header{display:flex;align-items:center;gap:18px;padding:22px 20px 8px;max-width:1200px;margin:0 auto}
+header svg{width:clamp(96px,22vw,140px);height:auto;flex:none;filter:drop-shadow(0 0 20px rgba(224,162,26,.3))}
+h1{margin:0;font-size:clamp(1.7rem,5vw,2.8rem);font-weight:800;letter-spacing:-.02em;line-height:1}
+header p{margin:6px 0 0;font-size:1rem;opacity:.85}
+.gold{display:inline-block;margin-top:10px;background:var(--gold);color:#12303f;font-weight:800;border-radius:99px;padding:3px 14px;font-size:.9rem}
+main{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;padding:14px 20px 28px;max-width:1200px;margin:0 auto}
+footer{text-align:center;padding:0 20px 24px;font-size:.85rem;opacity:.75}
+.game{background:var(--card);color:var(--ink);border:3px solid var(--ink);border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 6px 0 var(--ink)}
+.game.done{border-color:var(--win);box-shadow:0 6px 0 var(--win)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.top h2{margin:0;font-size:1.25rem;font-weight:800;display:flex;align-items:center;gap:10px}
+.pips{width:22px;height:30px;border:2.5px solid var(--ink);border-radius:5px;flex:none;
+  background:radial-gradient(circle at 30% 18%,var(--ink) 2.2px,transparent 2.8px),radial-gradient(circle at 70% 18%,var(--ink) 2.2px,transparent 2.8px),
+  radial-gradient(circle at 50% 50%,var(--gold) 2.2px,transparent 2.8px),
+  radial-gradient(circle at 30% 82%,var(--ink) 2.2px,transparent 2.8px),radial-gradient(circle at 70% 82%,var(--ink) 2.2px,transparent 2.8px)}
+.btns{display:flex;gap:6px}
+.sm{font:inherit;font-size:.85rem;font-weight:700;background:transparent;color:var(--muted);border:2px solid var(--line);border-radius:10px;padding:6px 10px;cursor:pointer}
+.sm:hover:not(:disabled){color:var(--ink);border-color:var(--ink)}
+.sm:disabled{opacity:.45;cursor:not-allowed}
+.teams{position:relative;display:grid;grid-template-columns:1fr 1fr;background:#fffdf4;border:3px solid var(--ink);border-radius:16px;overflow:hidden}
+.teams::before{content:"";position:absolute;left:50%;top:10px;bottom:10px;width:3px;background:var(--ink);transform:translateX(-50%);border-radius:2px}
+.teams::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:14px;background:var(--gold);border:3px solid var(--ink);border-radius:50%;transform:translate(-50%,-50%)}
+.team{padding:12px 10px 12px;text-align:center}
+.team.lead{background:color-mix(in srgb,var(--gold) 22%,#fffdf4)}
+.team.win{background:color-mix(in srgb,var(--win) 20%,#fffdf4)}
+.team input.name{width:100%;font:inherit;font-weight:700;text-align:center;background:transparent;color:var(--ink);border:0;border-bottom:2px dashed var(--line);padding:2px 0;font-size:1rem}
+.score{font-size:3.4rem;font-weight:800;line-height:1.1;margin:8px 0 6px;font-variant-numeric:tabular-nums}
+.bar{height:9px;background:var(--line);border-radius:99px;overflow:hidden;margin:0 6px}
+.bar i{display:block;height:100%;background:var(--teal);border-radius:99px;transition:width .3s}
+.team.lead .bar i{background:var(--gold)}
+.team.win .bar i{background:var(--win)}
+.add{display:grid;grid-template-columns:1fr 1fr auto;gap:8px}
+.add input{width:100%;font:inherit;font-size:1.15rem;font-weight:700;text-align:center;padding:11px 4px;border-radius:12px;border:2px solid var(--ink);background:#fffdf4;color:var(--ink)}
+.add input:focus,.name:focus{outline:3px solid var(--gold);outline-offset:1px}
+.add input:disabled{opacity:.5}
+.go{font:inherit;font-weight:800;background:var(--teal);color:#fff;border:0;border-radius:12px;padding:0 18px;cursor:pointer;box-shadow:0 3px 0 #083f49}
+.go:active:not(:disabled){transform:translateY(2px);box-shadow:0 1px 0 #083f49}
+.go:focus-visible,.sm:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.go:disabled{opacity:.4;cursor:not-allowed}
+.hist{max-height:150px;overflow-y:auto;font-variant-numeric:tabular-nums;font-size:.92rem}
+.hist div{display:grid;grid-template-columns:1fr 1fr 1fr;text-align:center;padding:4px 0;border-top:1px solid var(--line);color:var(--muted)}
+.hist div b{color:var(--ink)}
+.hist .empty{display:block;border:0}
+#snd{color:var(--head);border-color:currentColor;margin-top:10px}
+.hist div span:not(:first-child){color:var(--ink);font-weight:700;font-size:1.05rem}
+.hist small{color:var(--muted);font-weight:500;font-size:.8rem}
+.banner{background:var(--win);color:#fff;border-radius:14px;padding:12px;text-align:center;font-weight:800;font-size:1.3rem;animation:pop .45s ease-out}
+.banner small{display:block;font-weight:500;opacity:.9;font-size:.85rem}
+.tie{color:var(--red);text-align:center;font-weight:700;font-size:.9rem}
+@keyframes pop{0%{transform:scale(.85);opacity:0}70%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}.banner{animation:none}}
+</style>
+</head>
+<body>
+<header>
+  <svg viewBox="0 0 200 200" role="img" aria-label="Logo de la Asociación de Servidores Públicos JBN">
+    <defs>
+      <linearGradient id="gd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8dc8a"/><stop offset=".5" stop-color="#e0a21a"/><stop offset="1" stop-color="#a86f0c"/></linearGradient>
+      <linearGradient id="iv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffdf4"/><stop offset="1" stop-color="#e3d9bb"/></linearGradient>
+      <linearGradient id="gr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8af0c6"/><stop offset="1" stop-color="#1fa57a"/></linearGradient>
+      <path id="arc" d="M31.9,126.2 A73,73 0 1 1 168.1,126.2"/>
+      <g id="hd"><path d="M42,94 C42,130 66,152 100,155 L100,143 C76,140 58,124 54,100 C53,93 43,89 42,94Z" fill="url(#gd)"/>
+        <path d="M50,101 C56,99 60,104 62,113 M56,115 C61,114 65,119 67,126" stroke="#0b1620" stroke-width="1.5" fill="none" opacity=".55" stroke-linecap="round"/></g>
+    </defs>
+    <circle cx="100" cy="100" r="97" fill="#070707" stroke="url(#gd)" stroke-width="3"/>
+    <circle cx="100" cy="100" r="91" fill="none" stroke="url(#gd)" stroke-width="1"/>
+    <circle cx="100" cy="100" r="64" fill="#0b1620" stroke="url(#gd)" stroke-width="2.5"/>
+    <text font-family="'Bricolage Grotesque',Arial,sans-serif" font-weight="800" font-size="10.5" letter-spacing=".6" fill="url(#gd)"><textPath href="#arc" startOffset="50%" text-anchor="middle">ASOCIACIÓN DE SERVIDORES PÚBLICOS</textPath></text>
+    <path d="M36,142 l4,-4 4,4 -4,4z M156,142 l4,-4 4,4 -4,4z" fill="url(#gd)"/>
+    <path d="M100,86 L100,68" stroke="url(#gr)" stroke-width="3" stroke-linecap="round"/>
+    <path d="M100,70 C85,70 74,62 72,48 C88,48 99,57 100,70Z" fill="url(#gr)"/>
+    <path d="M100,70 C115,70 126,62 128,48 C112,48 101,57 100,70Z" fill="url(#gr)"/>
+    <path d="M97,66 C90,60 83,55 77,51 M103,66 C110,60 117,55 123,51" stroke="#0b1620" stroke-width="1" fill="none" opacity=".45"/>
+    <use href="#hd"/><use href="#hd" transform="translate(200 0) scale(-1 1)"/>
+    <rect x="86" y="84" width="28" height="44" rx="5" fill="url(#iv)" stroke="url(#gd)" stroke-width="1.5"/>
+    <line x1="91" y1="106" x2="109" y2="106" stroke="#0b1620" stroke-width="1.8"/>
+    <g fill="#0b1620"><circle cx="93" cy="90" r="2.2"/><circle cx="100" cy="95" r="2.2"/><circle cx="107" cy="100" r="2.2"/>
+      <circle cx="93" cy="113" r="2.2"/><circle cx="107" cy="113" r="2.2"/><circle cx="93" cy="121" r="2.2"/><circle cx="107" cy="121" r="2.2"/></g>
+    <rect x="62" y="154" width="76" height="28" rx="14" fill="url(#gd)" stroke="#070707" stroke-width="3"/>
+    <text x="100" y="174" text-anchor="middle" font-family="'Bricolage Grotesque',Arial,sans-serif" font-weight="800" font-size="20" letter-spacing="2" fill="#070707">JBN</text>
+  </svg>
+  <div><h1>Marcador de Dominó</h1><p>Asociación de Servidores Públicos</p><span class="gold">Gana quien llegue a 200 puntos</span> <button class="sm" id="snd" type="button"></button></div>
+</header>
+<main id="app"></main>
+<footer>ASP JBN · 3 partidas a la vez</footer>
+
+<script>
+const META = 200, KEY = 'domino-v1';
+const fresh = () => ({ names: ['Pareja A', 'Pareja B'], rounds: [] });
+let games = [fresh(), fresh(), fresh()];
+try { const s = JSON.parse(localStorage.getItem(KEY) || 'null'); if (Array.isArray(s) && s.length === 3) games = s; } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(games)); } catch (e) {} };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const totals = g => g.rounds.reduce((t, r) => [t[0] + r[0], t[1] + r[1]], [0, 0]);
+function winner(g) {
+  const t = totals(g);
+  if (t[0] < META && t[1] < META) return -1;
+  if (t[0] === t[1]) return -2;
+  return t[0] > t[1] ? 0 : 1;
+}
+
+function card(i) {
+  const g = games[i], t = totals(g), w = winner(g);
+  const lead = t[0] === t[1] ? -1 : (t[0] > t[1] ? 0 : 1);
+  const team = k => `
+    <div class="team ${w === k ? 'win' : (w < 0 && lead === k && t[k] > 0 ? 'lead' : '')}">
+      <input class="name" data-g="${i}" data-t="${k}" value="${esc(g.names[k])}" maxlength="20" aria-label="Nombre de la pareja ${k + 1}">
+      <div class="score">${t[k]}</div>
+      <div class="bar"><i style="width:${Math.min(100, t[k] / META * 100)}%"></i></div>
+    </div>`;
+  let ra = 0, rb = 0;
+  const hist = g.rounds.length
+    ? g.rounds.map((r, n) => { ra += r[0]; rb += r[1]; return `<div><span>Mano ${n + 1}</span><span>${r[0] ? r[0] + '<small> = ' + ra + '</small>' : '–'}</span><span>${r[1] ? r[1] + '<small> = ' + rb + '</small>' : '–'}</span></div>`; }).reverse().join('')
+    : '<div class="empty">Aún no hay manos anotadas</div>';
+  const banner = w >= 0
+    ? `<div class="banner">🏆 ¡Ganó ${esc(g.names[w])}!<small>${t[w]} puntos · partida terminada</small></div>`
+    : (w === -2 ? '<div class="tie">Empate pasando de 200: se juega otra mano</div>' : '');
+  const off = w >= 0 ? 'disabled' : '';
+  return `
+    <div class="top"><h2><span class="pips"></span>Partida ${i + 1}</h2>
+      <div class="btns"><button class="sm" data-act="undo" data-g="${i}" ${g.rounds.length ? '' : 'disabled'}>Deshacer</button>
+      <button class="sm" data-act="reset" data-g="${i}">Nueva</button></div></div>
+    <div class="teams">${team(0)}${team(1)}</div>
+    ${banner}
+    <div class="add">
+      <input type="number" inputmode="numeric" min="0" placeholder="+ pts" data-in="${i}-0" aria-label="Puntos de ${esc(g.names[0])}" ${off}>
+      <input type="number" inputmode="numeric" min="0" placeholder="+ pts" data-in="${i}-1" aria-label="Puntos de ${esc(g.names[1])}" ${off}>
+      <button class="go" data-act="add" data-g="${i}" ${off}>Anotar</button>
+    </div>
+    <div class="hist" aria-label="Historial de manos">${hist}</div>`;
+}
+
+function draw(i) {
+  let el = document.getElementById('g' + i);
+  if (!el) { el = document.createElement('section'); el.id = 'g' + i; document.getElementById('app').appendChild(el); }
+  el.className = 'game' + (winner(games[i]) >= 0 ? ' done' : '');
+  el.innerHTML = card(i);
+}
+[0, 1, 2].forEach(draw);
+
+function addRound(i) {
+  const a = Math.max(0, parseInt(document.querySelector(`[data-in="${i}-0"]`).value) || 0);
+  const b = Math.max(0, parseInt(document.querySelector(`[data-in="${i}-1"]`).value) || 0);
+  if (!a && !b) return;
+  const before = winner(games[i]);
+  games[i].rounds.push([a, b]); save(); draw(i);
+  if (before < 0 && winner(games[i]) >= 0) celebrate(i);
+  const first = document.querySelector(`[data-in="${i}-0"]`); if (first && !first.disabled) first.focus();
+}
+let sound = true; try { sound = localStorage.getItem('domino-sound') !== '0'; } catch (e) {}
+const snd = document.getElementById('snd');
+const sndLabel = () => { snd.textContent = sound ? '🔊 Sonido activado' : '🔇 Sonido apagado'; snd.setAttribute('aria-pressed', sound); };
+sndLabel();
+function fanfare() {
+  try {
+    const C = new (window.AudioContext || window.webkitAudioContext)();
+    [523, 659, 784, 1047].forEach((f, k) => {
+      const o = C.createOscillator(), g = C.createGain(), t = C.currentTime + k * 0.16;
+      o.type = 'triangle'; o.frequency.value = f; o.connect(g); g.connect(C.destination);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.3, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.4);
+      o.start(t); o.stop(t + 0.45);
+    });
+  } catch (e) {}
+}
+function bestVoice() {
+  const vs = (window.speechSynthesis ? speechSynthesis.getVoices() : []).filter(x => x.lang.toLowerCase().startsWith('es'));
+  const score = x => {
+    const n = x.name.toLowerCase(), l = x.lang.toLowerCase();
+    let s = 0;
+    if (/natural|neural|online|premium|enhanced|siri|google/.test(n)) s += 10;
+    if (/es[-_](do|mx|us|419|co|ve|pr|cu|pe|ar|cl)/.test(l)) s += 5;
+    if (x.localService === false) s += 1;
+    return s;
+  };
+  return vs.sort((a, b) => score(b) - score(a))[0];
+}
+const frases = [
+  (n, p) => `¡Se acabó la partida! Ganó ${n}, con ${p} puntos. ¡Felicidades!`,
+  (n, p) => `¡Dominó! Tenemos ganadores... ${n}, con ${p} puntos.`,
+  (n, p) => `¡Y llegamos al final! ... Ganó ${n}, con ${p} puntos. ¡Qué partidón!`
+];
+function speak(txt, delay) {
+  try {
+    if (!window.speechSynthesis) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(txt);
+    const v = bestVoice();
+    if (v) u.voice = v;
+    u.lang = v ? v.lang : 'es-US'; u.rate = 0.92; u.pitch = 1.05; u.volume = 1;
+    setTimeout(() => speechSynthesis.speak(u), delay);
+  } catch (e) {}
+}
+function celebrate(i) {
+  if (!sound) return;
+  const g = games[i], w = winner(g), t = totals(g);
+  fanfare();
+  speak(frases[Math.floor(Math.random() * frases.length)](g.names[w], t[w]), 900);
+}
+snd.addEventListener('click', () => {
+  sound = !sound;
+  try { localStorage.setItem('domino-sound', sound ? '1' : '0'); } catch (e) {}
+  sndLabel();
+  if (sound) speak('Sonido activado', 0);
+});
+const app = document.getElementById('app');
+app.addEventListener('click', e => {
+  const b = e.target.closest('button[data-act]'); if (!b) return;
+  const i = +b.dataset.g;
+  if (b.dataset.act === 'add') addRound(i);
+  if (b.dataset.act === 'undo') { games[i].rounds.pop(); save(); draw(i); }
+  if (b.dataset.act === 'reset') {
+    if (winner(games[i]) >= 0 || b.dataset.sure === '1') { games[i] = { names: games[i].names, rounds: [] }; save(); draw(i); }
+    else { b.dataset.sure = '1'; b.textContent = '¿Borrar todo?'; setTimeout(() => { if (b.isConnected) { b.dataset.sure = ''; b.textContent = 'Nueva'; } }, 3000); }
+  }
+});
+app.addEventListener('input', e => {
+  if (e.target.classList.contains('name')) { games[+e.target.dataset.g].names[+e.target.dataset.t] = e.target.value; save(); }
+});
+app.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.dataset.in) addRound(+e.target.dataset.in.split('-')[0]);
+});
+</script>
+</body>
+</html>
